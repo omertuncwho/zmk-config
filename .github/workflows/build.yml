@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build ZMK firmware
-        uses: zmkfirmware/zmk-build-action@v1
+        uses: zmkfirmware/zmk-build@v1
         with:
           board: nice_nano
           shield: lily58_left lily58_right
