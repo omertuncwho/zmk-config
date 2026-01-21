@@ -20,9 +20,12 @@ jobs:
       - name: Install west
         run: pip install west
 
+      - name: Clean previous west
+        run: rm -rf .west
+
       - name: Initialize west workspace
         run: |
-          west init -m https://github.com/zmkfirmware/zmk.git
+          west init -m https://github.com/zmkfirmware/zmk.git --mf app/west.yml
           west update
 
       - name: Build firmware
