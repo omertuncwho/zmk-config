@@ -1,0 +1,19 @@
+name: Build ZMK firmware
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build ZMK
+        uses: zmkfirmware/zmk-build-action@v1
+        with:
+          board: nice_nano
+          shield: lily58_left lily58_right
