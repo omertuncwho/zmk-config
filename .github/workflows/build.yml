@@ -9,12 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build ZMK firmware
-        uses: zmkfirmware/zmk-build-action@v1
-        env:
-          BOARD: nice_nano
-          SHIELD: lily58_left lily58_right
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install west
+        run: pip install west
+
+      - name: Initialize west
+        run: |
+          west init -l config
+          west update
+
+      - name: Build firmware
+        run: |
+          west build -s zmk/app -b nice_nano -- -DSHIELD="lily58_left lily58_right"
