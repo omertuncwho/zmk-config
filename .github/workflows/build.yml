@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout zmk-config
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -20,11 +20,15 @@ jobs:
       - name: Install west
         run: pip install west
 
-      - name: Initialize west
+      - name: Initialize west workspace
         run: |
-          west init -l config
+          west init -m https://github.com/zmkfirmware/zmk.git
           west update
 
       - name: Build firmware
         run: |
-          west build -s zmk/app -b nice_nano -- -DSHIELD="lily58_left lily58_right"
+          west build -s zmk/app \
+            -b nice_nano \
+            -- \
+            -DZMK_CONFIG=$GITHUB_WORKSPACE/config \
+            -DSHIELD="lily58_left lily58_right"
